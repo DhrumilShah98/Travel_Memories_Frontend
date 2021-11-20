@@ -1,6 +1,7 @@
 {
   "name": "travel_memories_frontend",
   "version": "0.1.0",
+  "description": "A travel application front-end built as part of the final project in class CSCI5409 - Advanced Cloud Computing using multiple cloud services.",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
