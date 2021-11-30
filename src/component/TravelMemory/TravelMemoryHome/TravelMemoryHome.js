@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Button, Container, Grow, Grid, TextField } from "@material-ui/core";
 import TravelMemoryPosts from "../TravelMemoryPosts/TravelMemoryPosts";
+import TravelMemoryForm from "../TravelMemoryForm/TravelMemoryForm";
 import dummyTravelMemoryPosts from './dummyTravelMemoryPosts';
 import useStyles from "./styles.js";
 
@@ -48,6 +49,9 @@ const TravelMemoryHome = () => {
                     alignItems="stretch">
                     <Grid item xs={12} md={7}>
                         <TravelMemoryPosts travelMemoryPosts={travelMemoryPosts} />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <TravelMemoryForm />
                     </Grid>
                 </Grid>
             </Container>

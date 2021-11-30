@@ -1,7 +1,6 @@
 /* Dhrumil Amish Shah */
 import React from 'react';
 import { Card, CardContent, CardMedia, Typography, CardActions, Button } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
 import moment from 'moment';
 import useStyles from './styles.js';
 
