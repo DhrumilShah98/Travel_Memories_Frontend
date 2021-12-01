@@ -2,10 +2,16 @@
 import React from 'react';
 import { Card, CardContent, CardMedia, Typography, CardActions, Button } from '@material-ui/core';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 import useStyles from './styles.js';
 
 const TravelMemoryPost = ({ travelMemoryPost }) => {
     const classes = useStyles();
+    const navigate = useNavigate();
+
+    const viewDetails = () => {
+        navigate(`/post/${travelMemoryPost.post_id}`, { state: travelMemoryPost });
+    };
 
     return (
         <Card className={classes.card}
@@ -34,7 +40,8 @@ const TravelMemoryPost = ({ travelMemoryPost }) => {
                         borderRadius: 12
                     }}
                     variant="contained"
-                    size="small">
+                    size="small"
+                    onClick={viewDetails}>
                     View
                 </Button>
             </CardActions>
