@@ -1,15 +1,16 @@
 /* Dhrumil Amish Shah */
 import React, { useState } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
+import { postTravelMemoryPost } from '../../../apis/travelMemoryPostAPIs';
 import useStyles from './styles.js';
 
-const TravelMemoryForm = () => {
+const TravelMemoryForm = ({ travelMemoryPosts, setTravelMemoryPosts }) => {
     const classes = useStyles();
-    const [formData, setFormData] = useState({ postName: '', postDescription: '', postLocation: '', postZipCode: '', postImageURL: '' });
-    const [errors, setErrors] = useState({ postNameValid: false, postDescriptionValid: false, postLocationValid: false, postZipCodeValid: false, postImageURLValid: false });
+    const [formData, setFormData] = useState({ postName: '', postDescription: '', postLocation: '', postZipCode: '', postImage: '' });
+    const [errors, setErrors] = useState({ postNameValid: false, postDescriptionValid: false, postLocationValid: false, postZipCodeValid: false, postImageValid: false });
 
     const validateFormData = () => {
-        if (errors.postNameValid && errors.postDescriptionValid && errors.postLocationValid && errors.postZipCodeValid && errors.postImageURLValid) {
+        if (errors.postNameValid && errors.postDescriptionValid && errors.postLocationValid && errors.postZipCodeValid && errors.postImageValid) {
             return true;
         } else {
             return false;
@@ -17,8 +18,8 @@ const TravelMemoryForm = () => {
     };
 
     const clearFormData = () => {
-        setFormData({ postName: '', postDescription: '', postLocation: '', postZipCode: '', postImageURL: '' });
-        setErrors({ postNameValid: false, postDescriptionValid: false, postLocationValid: false, postZipCodeValid: false, postImageURLValid: false });
+        setFormData({ postName: '', postDescription: '', postLocation: '', postZipCode: '', postImage: '' });
+        setErrors({ postNameValid: false, postDescriptionValid: false, postLocationValid: false, postZipCodeValid: false, postImageValid: false });
     }
 
     const validate = (e) => {
@@ -63,13 +64,13 @@ const TravelMemoryForm = () => {
                     errors["postZipCodeValid"] = true;
                 }
                 break;
-            case "postImageURL":
+            case "postImage":
                 if (e.target.files === null || e.target.files[0] === null) {
-                    errors["postImageURL"] = "Image is required."
-                    errors["postImageURLValid"] = false;
+                    errors["postImage"] = "Image is required."
+                    errors["postImageValid"] = false;
                 } else {
-                    errors["postImageURL"] = "";
-                    errors["postImageURLValid"] = true;
+                    errors["postImage"] = "";
+                    errors["postImageValid"] = true;
                 }
                 break;
             default:
@@ -98,7 +99,34 @@ const TravelMemoryForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validateFormData()) {
-            console.log("Form data valid!");
+            const userId = 1;
+            const travelMemoryFormData = new FormData();
+            travelMemoryFormData.append("userId", userId);
+            travelMemoryFormData.append("postName", formData.postName);
+            travelMemoryFormData.append("postDescription", formData.postDescription);
+            travelMemoryFormData.append("postLocation", formData.postLocation);
+            travelMemoryFormData.append("postZipCode", formData.postZipCode);
+            travelMemoryFormData.append("postImage", formData.postImage);
+            createTravelMemoryPost(travelMemoryFormData);
+        }
+    };
+
+    async function createTravelMemoryPost(travelMemoryFormData) {
+        try {
+            await postTravelMemoryPost(travelMemoryFormData)
+                .then((res) => {
+                    const responseExists = (res.data !== null || res.data !== undefined)
+                    if (responseExists) {
+                        res.data.payload.display = true;
+                        setTravelMemoryPosts(travelMemoryPosts => [res.data.payload, ...travelMemoryPosts]);
+                        clearFormData();
+                    }
+                }).catch((err) => {
+                    console.log(err)
+                    setTravelMemoryPosts(travelMemoryPosts);
+                });
+        } catch (err) {
+            console.log(err);
         }
     };
 
@@ -163,14 +191,14 @@ const TravelMemoryForm = () => {
                 <div className={classes.fileInput}>
                     <input
                         fullWidth
-                        id="postImageURL"
+                        id="postImage"
                         type="file"
-                        name="postImageURL"
+                        name="postImage"
                         accept="image/*"
                         required
                         onChange={onImageChange}
-                        error={errors["postImageURL"] ? true : false}
-                        helperText={errors["postImageURL"]} />
+                        error={errors["postImageValid"] ? true : false}
+                        helperText={errors["postImageValid"]} />
                 </div>
                 <Button
                     className={classes.buttonSubmit}

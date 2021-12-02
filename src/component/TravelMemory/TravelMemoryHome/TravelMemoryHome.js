@@ -1,14 +1,36 @@
 /* Dhrumil Amish Shah */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Container, Grow, Grid, TextField } from "@material-ui/core";
 import TravelMemoryPosts from "../TravelMemoryPosts/TravelMemoryPosts";
 import TravelMemoryForm from "../TravelMemoryForm/TravelMemoryForm";
-import dummyTravelMemoryPosts from './dummyTravelMemoryPosts';
+import { getTravelMemoryPosts } from '../../../apis/travelMemoryPostAPIs';
 import useStyles from "./styles.js";
 
 const TravelMemoryHome = () => {
-    const [travelMemoryPosts, setTravelMemoryPosts] = useState(dummyTravelMemoryPosts);
+    const [travelMemoryPosts, setTravelMemoryPosts] = useState([]);
     const classes = useStyles();
+
+    useEffect(() => {
+        getAllTravelMemoryPosts();
+    }, []);
+
+    async function getAllTravelMemoryPosts() {
+        await getTravelMemoryPosts()
+            .then((res) => {
+                const responseExists = res.data !== null || res.data !== undefined;
+                if (responseExists) {
+                    res.data.payload.Items.forEach((item) => {
+                        item.display = true;
+                    });
+                }
+                setTravelMemoryPosts(res.data.payload.Items);
+            })
+            .catch((err) => {
+                console.log(err);
+                setTravelMemoryPosts([]);
+            });
+    };
+
     return (
         <Grow in>
             <Container style={{ marginTop: 56 }}>
@@ -51,7 +73,7 @@ const TravelMemoryHome = () => {
                         <TravelMemoryPosts travelMemoryPosts={travelMemoryPosts} />
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <TravelMemoryForm />
+                        <TravelMemoryForm travelMemoryPosts={travelMemoryPosts} setTravelMemoryPosts={setTravelMemoryPosts} />
                     </Grid>
                 </Grid>
             </Container>

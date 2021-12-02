@@ -10,20 +10,20 @@ const TravelMemoryPost = ({ travelMemoryPost }) => {
     return (
         <Card className={classes.card}
             elevation={6}
-            key={travelMemoryPost.post_id}>
+            key={travelMemoryPost.postId.S}>
             <CardMedia className={classes.media}
-                image={travelMemoryPost.post_image_url} />
+                image={travelMemoryPost.postImageURL.S} />
             <div className={classes.overlay}>
-                <Typography variant="body2">{moment(travelMemoryPost.post_created_at).fromNow()}</Typography>
+                <Typography variant="body2">{moment(travelMemoryPost.createdAt.S).fromNow()}</Typography>
             </div>
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    {travelMemoryPost.post_name}
+                    {travelMemoryPost.postName.S}
                 </Typography>
                 <Typography variant="body2"
                     color={"textSecondary"}
                     component="p">
-                    {`${travelMemoryPost.post_location}`}<br />{`${travelMemoryPost.post_zip_code.toUpperCase()}`}
+                    {`${travelMemoryPost.postLocation.S}`}<br />{`${travelMemoryPost.postZipCode.S.toUpperCase()}`}
                 </Typography>
             </CardContent>
             <CardActions>
