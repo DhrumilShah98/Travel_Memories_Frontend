@@ -13,10 +13,11 @@ const TravelMemoryPosts = ({ travelMemoryPosts }) => {
             (<Grid className={classes.container}
                 container alignItems="stretch"
                 spacing={3}>
+                {console.log(`TravelMemoryPosts: ${travelMemoryPosts.length}`)}
                 {travelMemoryPosts.map((travelMemoryPost) => {
-                    if (travelMemoryPost.post_display) {
+                    if (travelMemoryPost.display) {
                         return <Grid item xs={12} sm={6} md={4}>
-                            <React.Fragment key={travelMemoryPost.post_id}>
+                            <React.Fragment key={travelMemoryPost.postId.S}>
                                 <TravelMemoryPost travelMemoryPost={travelMemoryPost} />
                             </React.Fragment>
                         </Grid>
