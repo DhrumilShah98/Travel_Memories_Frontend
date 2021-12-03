@@ -10,7 +10,9 @@ const TravelMemoryPost = ({ travelMemoryPost }) => {
     const navigate = useNavigate();
 
     const viewDetails = () => {
-        navigate(`/post/${travelMemoryPost.post_id}`, { state: travelMemoryPost });
+        if (travelMemoryPost.postId.S !== undefined) {
+            navigate(`/post/${travelMemoryPost.postId.S}`, { state: travelMemoryPost });
+        }
     };
 
     return (
