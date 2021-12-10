@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import { postTravelMemoryPost } from '../../../apis/travelMemoryPostAPIs';
 import useStyles from './styles.js';
+import Navigation from '../TravelMemoryUserManagement/Navigation';
 
 const TravelMemoryForm = ({ travelMemoryPosts, setTravelMemoryPosts }) => {
     const classes = useStyles();
@@ -131,6 +132,8 @@ const TravelMemoryForm = ({ travelMemoryPosts, setTravelMemoryPosts }) => {
     };
 
     return (
+        <>
+        <Navigation />
         <Paper className={classes.paper} elevation={6}>
             <form className={`${classes.root} ${classes.form}`} autoComplete="off" noValidate method="POST" enctype="multipart/form-data">
                 <Typography variant="h6">Upload Your Memory</Typography>
@@ -210,6 +213,7 @@ const TravelMemoryForm = ({ travelMemoryPosts, setTravelMemoryPosts }) => {
                     fullWidth>Add My Memory</Button>
             </form>
         </Paper>
+        </>
     );
 }
 
