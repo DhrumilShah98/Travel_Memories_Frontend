@@ -1,7 +1,7 @@
 /* Dhrumil Amish Shah */
 import axios from 'axios';
 
-const BASE_URL = 'https://travel-memories-5409.de.r.appspot.com/';
+const BASE_URL = 'http://localhost:3001';
 
 export const getTravelMemoryPosts = () => {
     return axios({
